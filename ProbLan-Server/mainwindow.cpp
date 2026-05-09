@@ -17,8 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->listWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->listWidget->verticalScrollBar()->setSingleStep(10); // Weicheres Scrollen
 
-    connect(&chatServer, &ChatServer::messageReceived, this, [=](const QString &msg) {
-        addChatMessage("SlamWalka", msg, false);
+    connect(&chatServer, &ChatServer::messageReceived, this, [=](const QString &msg, const QString &target, bool isMe) {
+        addChatMessage(target, msg, isMe);
     });
     connect(&chatServer, &ChatServer::newClientConnected, this, &MainWindow::updateClientList);
     connect(&chatServer, &ChatServer::clientDisconnected, this, &MainWindow::removeDisconnectedClient);

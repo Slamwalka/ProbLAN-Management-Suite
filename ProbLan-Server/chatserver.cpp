@@ -82,24 +82,18 @@ void ChatServer::onReadyRead()
                                                disconnect(conU);
                                            });
 
-    QMetaObject::Connection conM = connect(&msgHand, &MessageHandler::userNameChanged, [ this, &conM](const QString &Message)
+    QMetaObject::Connection conM = connect(&msgHand, &MessageHandler::newMessage, [this, &conM, &senderSocket](const QString &sender, const QString &target, const QString &Message)
                                            {
-                                               emit messageReceived(Message);
+                                               if(target == "global") {
+                                                   broadcast(Message.toUtf8(), senderSocket);
+                                                   emit messageReceived(Message, sender);
+                                               } else {
+
+                                               }
                                                disconnect(conM);
                                            });
 
     msgHand.handleMessage(data);
-
-    if(obj["type"].toString() == "message" && obj["target"].toString() == "global")
-    {
-        broadcast(data);
-
-        QString displayMsg = QString("%1").arg(
-            obj["content"].toString()
-            );
-
-        emit messageReceived(displayMsg);
-    }
 }
 
 void ChatServer::onDisconnected()

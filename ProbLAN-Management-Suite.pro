@@ -3,6 +3,6 @@ TEMPLATE = subdirs
 SUBDIRS += \
     MessageBubble \
     MessageHandler \
-    #ProbLan-Client \
+    ProbLan-Client \
     ProbLan-Server \
     AppConfig

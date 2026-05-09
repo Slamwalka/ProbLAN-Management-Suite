@@ -27,7 +27,7 @@ public:
     void startServer();
 
 signals:
-    void messageReceived(QString message);
+    void messageReceived(QString message, QString sender, bool isMe = false);
     void newClientConnected(ClientData client);
     void clientDisconnected(ClientData client);
 

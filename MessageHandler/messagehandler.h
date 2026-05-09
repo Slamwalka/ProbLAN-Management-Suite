@@ -17,6 +17,7 @@ signals:
 
 private:
     void handleSettings(const QJsonObject &currentMessage);
+    void handleMessage(const QJsonObject &currentMessage);
 
 private:
 

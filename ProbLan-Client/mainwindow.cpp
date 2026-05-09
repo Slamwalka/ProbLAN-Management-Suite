@@ -65,22 +65,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::addChatMessage(QString sender, QString text, bool isMe)
 {
-    // Dummy Pfad für das Beispiel. Später nimmst du das aus deiner User-Datenbank
     QString avatarPath = isMe ? "/me.jpg" : ":/images/other.png";
-
-    // 1. Das Custom Widget erstellen
     MessageBubble *bubbleWidget = new MessageBubble(sender, text, avatarPath, isMe);
-
-    // 2. Ein Item für die Liste erstellen
     QListWidgetItem *item = new QListWidgetItem(ui->listWidget);
 
-    // 3. Größe berechnen lassen!
-    // Das ist der Trick: Das Widget sagt dem Item, wie groß es sein muss.
     item->setSizeHint(bubbleWidget->sizeHint());
-
-    // 4. Widget und Item verheiraten
     ui->listWidget->setItemWidget(item, bubbleWidget);
-
-    // 5. Automatisch nach unten scrollen
     ui->listWidget->scrollToBottom();
 }

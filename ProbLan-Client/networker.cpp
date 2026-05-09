@@ -11,7 +11,7 @@ NetWorker::NetWorker(QObject *parent) :
     connect(this, &QTcpSocket::disconnected, [=]()
             {
                 qDebug() << "Beginne suche nach Server";
-                udpSocket->bind(AppConfig::instance().getDiscoverPort(),QUdpSocket::ShareAddress);
+                udpSocket->bind(AppConfig::instance().getDiscoverPort(), QUdpSocket::ShareAddress);
             });
 
     connect(udpSocket, &QUdpSocket::readyRead, this, &NetWorker::connectToServer);
@@ -86,7 +86,7 @@ void NetWorker::sendMessage(const QString &msg, const MessageType &type, const Q
         break;
     }
 
-    MsgFormat["sender"] = "";
+    MsgFormat["sender"] = AppConfig::instance().getUsername();
     MsgFormat["target"] = destination;
     MsgFormat["content"] = msg;
     MsgFormat["timestamp"] = QTime::currentTime().toString("HH:mm:ss");

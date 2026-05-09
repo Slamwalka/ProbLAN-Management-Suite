@@ -28,7 +28,8 @@ bool MessageHandler::handleMessage(const QByteArray &currentMessage)
 
     if(docObj[m_messageKeys[type]] == m_typeKeys[message])
     {
-        //Handle Message
+        qDebug() << "Handling Normal Message from " << docObj[m_messageKeys[sender]].toString();
+        handleMessage(docObj);
     }
 
     if(docObj[m_messageKeys[type]] == m_typeKeys[picture])
@@ -45,4 +46,14 @@ void MessageHandler::handleSettings(const QJsonObject &currentMessage)
     {
         emit userNameChanged(currentMessage[m_messageKeys[content]].toString().remove(m_configKeys[username]));
     }
+}
+
+void MessageHandler::handleMessage(const QJsonObject &currentMessage)
+{
+    emit newMessage
+        (
+        currentMessage[m_messageKeys[sender]].toString(),
+        currentMessage[m_messageKeys[target]].toString(),
+        currentMessage[m_messageKeys[content]].toString()
+        );
 }
